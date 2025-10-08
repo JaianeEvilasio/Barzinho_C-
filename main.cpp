@@ -10,7 +10,7 @@ using namespace std;
 int main() {
     Barzinho b;
 
-    // Adiciona bebidas
+    //bebidas
     b.adicionaProduto(new Bebidas("Caipirinha", 8.00));
     b.adicionaProduto(new Bebidas("Negroni", 18.00));
     b.adicionaProduto(new Bebidas("Pina Colada", 18.00));
@@ -19,51 +19,59 @@ int main() {
     b.adicionaProduto(new Bebidas("Coca-Cola Zero", 6.00));
     b.adicionaProduto(new Bebidas("Agua", 2.00));
 
-    // Adiciona aperitivos
+    //aperitivos
     b.adicionaProduto(new Aperitivo("Batatas Fritas", 10.00));
     b.adicionaProduto(new Aperitivo("Bolinhos de Bacalhau", 12.00));
 
-    // Cliente
     string nomecliente;
-    cout << "Digite seu nome: ";
-    getline(cin, nomecliente);
-    Cliente cliente(nomecliente);
-    Pedido* pedido = new Pedido(cliente);
 
-    cout << "\nBem-vindo ao Barzinho dos Divos, " << cliente.getnome() << "!" << endl;
-    cout << "===============================" << endl;
+    while (true) {
+        cout << "\nDigite seu nome (ou 'finalizado' para encerrar): ";
+        getline(cin, nomecliente);
 
-    // Mostra cardápio
-    int totalProdutos = b.getQuantidade();
-    for (int i = 0; i < totalProdutos; i++) {
-        cout << i + 1 << " - ";
-        b.getProduto(i)->mostrar();
-    }
-
-    // Escolhendo produtos
-    string resposta;
-    do {
-        int opcao;
-        cout << "\nDigite o número da bebida ou aperitivo que deseja adicionar ao pedido: ";
-        cin >> opcao;
-        cin.ignore();
-
-        if (opcao > 0 && opcao <= totalProdutos) {
-            pedido->adicionaProduto(b.getProduto(opcao - 1));
-            cout << "Adicionado: " << b.getProduto(opcao - 1)->getnome() << endl;
-        } else {
-            cout << "Opção inválida!" << endl;
+        if (nomecliente == "finalizado" || nomecliente == "Finalizado" || nomecliente == "FINALIZADO") {
+            cout << "\nEncerrando o sistema de pedidos..." << endl;
+            break;
         }
 
-        cout << "Deseja adicionar mais bebidas e/ou aperitivos? (sim/nao): ";
-        cin >> resposta;
+        Cliente cliente(nomecliente);
+        Pedido* pedido = new Pedido(cliente);
+
+        cout << "\nBem-vindo ao Nosso Barzinho, " << cliente.getnome() << "!" << endl;
+ 
+        int totalProdutos = b.getQuantidade();
+        cout << "\nMenu do Barzinho:\n";
+        for (int i = 0; i < totalProdutos; i++) {
+            cout << i + 1 << " - ";
+            b.getProduto(i)->mostrar();
+        }
+
+        int quantidade;
+        cout << "\nQuantos itens deseja adicionar ao pedido? ";
+        cin >> quantidade;
         cin.ignore();
-    } while (resposta == "sim" || resposta == "SIM");
 
-    // Finalizando pedido
-    b.adicionarpedido(pedido);
-    b.mostrarpedidos();
+        for (int i = 0; i < quantidade; i++) {
+            int opcao;
+            cout << "Digite o numero do item #" << (i + 1) << ": ";
+            cin >> opcao;
+            cin.ignore();
 
-    delete pedido;
+            if (opcao > 0 && opcao <= totalProdutos) {
+                pedido->adicionaProduto(b.getProduto(opcao - 1));
+                cout << "Adicionado: " << b.getProduto(opcao - 1)->getnome() << endl;
+            } else {
+                cout << "Digite um numero valido!\n";
+            }
+        }
+         b.adicionarpedido(pedido);
+         cout << "\n=============================" << endl;
+         cout << "Pedido de registrado com sucesso!" << endl;
+         cout << "=============================" << endl;
+         
+         b.mostrarpedidos();
+
+    }
+
     return 0;
 }

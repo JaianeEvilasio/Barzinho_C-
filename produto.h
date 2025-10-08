@@ -12,7 +12,7 @@ protected:
     string categoria;
 
 public:
-    Produto(const string& n = "", double p = 0, const string& c = "")
+    Produto(const string& n = "", double p = 0, const string& c = "") 
         : nome(n), preco(p), categoria(c) {}
 
     virtual ~Produto() {}
