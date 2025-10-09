@@ -4,9 +4,9 @@
 #include "Produto.h"
 #include "Pedido.h"
 
-class Barzinho {
+class Barzinho {  
 private:
-    Produto* cardapio[100];
+    Produto* cardapio[100]; 
     int qtdProdutos;
 
     Pedido* pedidos[100];
@@ -16,7 +16,7 @@ public:
     Barzinho();
     ~Barzinho();
 
-    void adicionaProduto(Produto* p);
+    void adicionaProduto(Produto* p);   
     Produto* getProduto(int i) const;
     int getQuantidade() const;
 

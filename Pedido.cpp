@@ -10,8 +10,8 @@ Pedido::~Pedido() {}
 
 
 
-void Pedido::adicionaProduto(Produto* p) {
-    if (qtd < 50) {
+void Pedido::adicionaProduto(Produto* p) { //
+    if (qtd < 50) { //limite de 50
         produtos[qtd++] = p;
     } else {
         cout << "Limite de produtos no pedido atingido!" << endl;
@@ -25,7 +25,7 @@ void Pedido::mostrarpedido() const {
     double total = 0;
     for (int i = 0; i < qtd; i++) {
         produtos[i]->mostrar();
-        total += produtos[i]->getpreco();
+        total += produtos[i]->getpreco(); //preço de cada produto é somado e obtem o total
     }
 
     cout << "Total: R$" << total << endl;

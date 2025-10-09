@@ -12,12 +12,12 @@ protected:
     string categoria;
 
 public:
-    Produto(const string& n = "", double p = 0, const string& c = "") 
+    Produto(const string& n = "", double p = 0, const string& c = "") //construtor
         : nome(n), preco(p), categoria(c) {}
 
     virtual ~Produto() {}
 
-    virtual void mostrar() const {
+    virtual void mostrar() const {// essa é a função que é modificada com base em qual produto esta sendo mostrado (polimorfismo)
         cout << nome << " (R$" << preco << ") - " << categoria << endl;
     }
 
