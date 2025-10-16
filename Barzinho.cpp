@@ -1,5 +1,7 @@
 #include "Barzinho.h"
 #include <iostream>
+#include "Bebidas.h"
+#include "Aperitivo.h"
 using namespace std;
 
 Barzinho::Barzinho() : qtdProdutos(0), qtdPedidos(0) {} //construtor
@@ -24,7 +26,7 @@ int Barzinho::getQuantidade() const {  //retorna a quantidade de produtos cadast
     return qtdProdutos;
 }
 
-void Barzinho::adicionarpedido(Pedido* p) { //quando um pedido é finalizado ele é guardadado
+void Barzinho::adicionarpedido(Pedido* p) { //quando um pedido é finalizado ele é guardado
     if (qtdPedidos < 100)
         pedidos[qtdPedidos++] = p;
 }
@@ -35,3 +37,32 @@ void Barzinho::mostrarpedidos() const { //mostra todos os pedidos guardados
         cout << "=============================" << endl;
     }
 }
+
+void Barzinho::mostrarpocategoria() const { //mostrando tudo em categorias
+
+    cout<<"===Menu do Barzinho==="<<endl; 
+
+    cout<<endl;
+
+    cout<<"===Aperitivos==="<<endl; //começando com aperetivos
+    for(int i=0;i<qtdProdutos;i++){
+        if(dynamic_cast<Aperitivo*>(cardapio[i])){ //o dynamic cast serve pra averiguar se o tipo do produto é bebida
+            cout<< i+1<< "-";
+            cardapio[i]->mostrar();
+        }
+    }
+    
+
+    cout<<endl;
+    
+    cout<<"===Bebidas==="<<endl; //agora bebidas
+    for(int i=0;i<qtdProdutos;i++){
+        if(dynamic_cast<Bebidas*>(cardapio[i])){ //o dynamic cast serve pra averiguar se o tipo do produto é aperitivos
+            cout<< i+1<< "-";
+            cardapio[i]->mostrar();
+        }
+    }
+
+    cout<<"\n====================================";
+}
+

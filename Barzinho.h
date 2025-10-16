@@ -6,6 +6,7 @@
 
 class Barzinho {  
 private:
+    //o barzinho possuirá, por padrão, um cardápio e pedidos dos clientes
     Produto* cardapio[100]; 
     int qtdProdutos;
 
@@ -16,12 +17,13 @@ public:
     Barzinho();
     ~Barzinho();
 
-    void adicionaProduto(Produto* p);   
+    void adicionaProduto(Produto* p);  
     Produto* getProduto(int i) const;
     int getQuantidade() const;
 
     void adicionarpedido(Pedido* p);
     void mostrarpedidos() const;
+    void mostrarpocategoria() const;
 };
 
 #endif

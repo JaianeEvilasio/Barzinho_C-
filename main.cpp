@@ -10,9 +10,21 @@ using namespace std;
 int main() {
     Barzinho b;
 
+    //aperitivos
+    b.adicionaProduto(new Aperitivo("Caldinho", 8.00));
+    b.adicionaProduto(new Aperitivo("Batatas Fritas", 10.00));
+    b.adicionaProduto(new Aperitivo("Bolinhos de Bacalhau", 12.00));
+    b.adicionaProduto(new Aperitivo("Espetinho de Frango", 15.00));
+    b.adicionaProduto(new Aperitivo("Espetinho de Carne", 15.50));
+    b.adicionaProduto(new Aperitivo("Espetinho de Frango com Bacon ", 16.00));
+
     //bebidas
-    b.adicionaProduto(new Bebidas("Caipirinha", 8.00)); //esse new ele serve para você guardar os objetos dentro do heap e nao deixar so na pilha
+    b.adicionaProduto(new Bebidas("Brahma Chopp", 6.00));  //esse new ele serve para você guardar os objetos dentro do heap e nao deixar so na pilha
                                                         //inclusive, é por isso que temos que usar o "delete"
+    b.adicionaProduto(new Bebidas("Corona Long Neck", 10.00)); 
+    b.adicionaProduto(new Bebidas("Heineken Long Neck", 12.00)); 
+    b.adicionaProduto(new Bebidas("Caipirinha", 8.00)); 
+    b.adicionaProduto(new Bebidas("Sangria", 18.00)); 
     b.adicionaProduto(new Bebidas("Negroni", 18.00));
     b.adicionaProduto(new Bebidas("Pina Colada", 18.00));
     b.adicionaProduto(new Bebidas("Aperol", 25.00));
@@ -20,9 +32,6 @@ int main() {
     b.adicionaProduto(new Bebidas("Coca-Cola Zero", 6.00));
     b.adicionaProduto(new Bebidas("Agua", 2.00));
 
-    //aperitivos
-    b.adicionaProduto(new Aperitivo("Batatas Fritas", 10.00));
-    b.adicionaProduto(new Aperitivo("Bolinhos de Bacalhau", 12.00));
 
     string nomecliente;
     string resposta;
@@ -41,12 +50,7 @@ int main() {
 
         cout << "\nBem-vindo ao Nosso Barzinho, " << cliente.getnome() << "!" << endl; 
 
-        int totalProdutos = b.getQuantidade(); 
-        cout << "\nMenu do Barzinho:\n";
-        for (int i = 0; i < totalProdutos; i++) {
-            cout << i + 1 << " - ";
-            b.getProduto(i)->mostrar(); //mostra o produto dependendo da categoria dele
-        }
+        b.mostrarpocategoria();
 
         int quantidade;
         cout << "\nQuantos itens deseja adicionar ao pedido? ";
@@ -59,7 +63,7 @@ int main() {
             cin >> opcao;
             cin.ignore();
 
-            if (opcao > 0 && opcao <= totalProdutos) {
+            if (opcao > 0 && opcao <= b.getQuantidade()) {
                 pedido->adicionaProduto(b.getProduto(opcao - 1)); // opção -1, pq o array inicia em 0
                 // usar o  -> é a msm coisa de usar (*pedido).mostrarpedido(), usamos o -> pq pedido é um ponteiro e nao um objeto 
                 cout << "Adicionado: " << b.getProduto(opcao - 1)->getnome() << endl;

@@ -2,11 +2,11 @@
 #include <iostream>
 using namespace std;
 
-Pedido::Pedido(const Cliente& c) 
+Pedido::Pedido(const Cliente& c) //construtor de pedido
     : cliente(c), qtd(0) 
 {}
 
-Pedido::~Pedido() {}
+Pedido::~Pedido() {} //destrutor de pedido (vazio)
 
 
 

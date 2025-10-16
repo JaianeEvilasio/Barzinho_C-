@@ -11,7 +11,7 @@ public:
     Bebidas(const string& n = "", double p = 0) : Produto(n, p, "Bebida") {} //em produto.h todo objeto tem nome, preco e categoria, aqui estamos dizendo q a categoria é bebidas
 
     void mostrar() const override { //essa função vai ser a q substitue a virtual que esta em produto.h
-        cout << "Bebida: " << nome << " (R$" << preco << ")" << endl;
+        cout  << nome << " (R$" << preco << ")" << endl;
     }
 };
 
