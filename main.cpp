@@ -69,6 +69,7 @@ int main() {
                 cout << "Adicionado: " << b.getProduto(opcao - 1)->getnome() << endl;
             } else {
                 cout << "Digite um numero valido!\n";
+                i--;
             }
         }
 
@@ -82,3 +83,4 @@ int main() {
 
     return 0;
 }
+
