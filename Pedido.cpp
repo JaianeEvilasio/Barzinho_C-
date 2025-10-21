@@ -22,19 +22,38 @@ void Pedido::mostrarpedido() const {
     cout << "Cliente: " << cliente.getnome() << endl;
     cout << "Itens do pedido:" << endl;
 
-    double total = 0;
-    for (int i = 0; i < qtd; i++) {
-        produtos[i]->mostrar();
-        total += produtos[i]->getpreco(); //preço de cada produto é somado e obtem o total
+    bool gerenciamentop[50]; //array criado pra gerenciar itens ja adicionados
+
+    for(int i=0;i<qtd;i++){
+        gerenciamentop[i]= false ;//inicializando todos os itens como false pra checar depois se ja foi adicionado
+    }
+
+
+    double total = 0; //total inicializdo
+
+    for(int i=0; i<qtd; i++){
+        if (gerenciamentop[i]==false){ //se ainda nao foi implementado no pedido
+            int contador = 1 ; //contador de quantas vezes o item apareceu(inicia em 1)
+            double preco =produtos[i]->getpreco();
+
+        
+
+            //botando true nos outros itens iguais do array
+            for(int h= i +1; h<qtd ; h++){
+                if(gerenciamentop[h]==false and produtos[h]->getnome()==produtos[i]->getnome()){//ou seja, so entra na condicao se ainda nao tiver virado true e o nome for igual
+                    contador=contador+1; //incrementando contadpr
+                    gerenciamentop[h]=true; //vira true!
+            }
+        }
+
+        double totalporitem= contador*preco;//calculando o total(qtd de itens repetidos * seu preco)
+        total= total + totalporitem;// add no total
+
+        cout<< contador<< "x "<< produtos[i]->getnome()<< " - R$"<< totalporitem<< endl;
+    }
+
+
     }
 
     cout << "Total: R$" << total << endl;
-}
-
-double Pedido::calcularTotal() const {
-    double total = 0;
-    for (int i = 0; i < qtd; i++) {
-        total += produtos[i]->getpreco();
-    }
-    return total;
 }
