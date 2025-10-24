@@ -14,9 +14,15 @@ public:
     Pedido(const Cliente& c);
     ~Pedido();
 
+
     void adicionaProduto(Produto* p);
     void mostrarpedido() const;
     double calcularTotal() const;
+
+    //funcoes banco de dados
+    Produto** getProdutos() const { return produtos;}
+    int getQtd() const { return qtd;}
+    const Cliente& getCliente() const { return cliente;}
 };
 
 

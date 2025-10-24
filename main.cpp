@@ -5,10 +5,45 @@
 #include "Aperitivo.h"
 #include "Cliente.h"
 #include "Pedido.h"
+#include <sqlite3.h>
 using namespace std;
 
+//criando funcao do banco de dados
+//criarei duas tabelas, uma pro cardpario e uma pros pedidos
+void funcaotabela(sqlite3* db){
+    const char* sql_cardapio=
+        "CREATE TABLE IF NOT EXISTS cardapio("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "nome TEXT,"
+        "preco REAL,"
+        "categoria TEXT);";
+
+    const char* sql_pedidos=
+        "CREATE TABLE IF NOT EXISTS pedidos("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "cliente TEXT,"
+        "item TEXT,"
+        "quantidade INTEGER,"
+        "total REAL);";
+
+    //tabelas montadas, passando pro sqlite junto cm a errmsg
+    char* errMSG= nullptr;
+    sqlite3_exec(db,sql_cardapio,nullptr,nullptr,&errMSG);
+    sqlite3_exec(db,sql_pedidos,nullptr,nullptr,&errMSG);
+
+
+}
+
 int main() {
-    Barzinho b;
+    sqlite3* db;
+    if (sqlite3_open("barzinho.db", &db)){
+        cout<< "Deu merda: "<<sqlite3_errmsg(db)<<endl;
+        return 1;
+    }
+
+    //criando as tabelas pelo banco
+    funcaotabela(db);
+    Barzinho b(db);
 
     //aperitivos
     b.adicionaProduto(new Aperitivo("Caldinho", 8.00));
@@ -74,12 +109,15 @@ int main() {
         }
 
         b.adicionarpedido(pedido);
+        b.salvarpedidobd(pedido); //salvando o pedido no bancooooo
         cout << "\n=============================" << endl;
         cout << "Pedido registrado com sucesso!" << endl;
         cout << "=============================" << endl;
 
         b.mostrarpedidos();
     }
+
+    sqlite3_close(db);
 
     return 0;
 }
