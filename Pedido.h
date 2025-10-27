@@ -20,7 +20,7 @@ public:
     double calcularTotal() const;
 
     //funcoes banco de dados
-    Produto** getProdutos() const { return produtos;}
+    Produto* const* getProdutos() const { return produtos;}
     int getQtd() const { return qtd;}
     const Cliente& getCliente() const { return cliente;}
 };

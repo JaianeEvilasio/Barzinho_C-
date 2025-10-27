@@ -17,7 +17,7 @@ private:
     sqlite3* db;
 
 public:
-    Barzinho(sqlite3* bd): qtdProdutos(0), qtdPedidos(0), db(bd) {};
+    Barzinho(sqlite3* bd);
     ~Barzinho();
 
     void adicionaProduto(Produto* p);  
