@@ -60,7 +60,7 @@ void Barzinho:: salvarpedidobd(Pedido* p){ //logica quase igual a de pedido cpp,
             double preco=p->getProdutos()[i]->getpreco();
 
             for (int j=i+1;j<qtdpropedidos;j++){
-                if(gerenciamentop[j]==false and p->getProdutos()[j]->getnome() == p->getProdutos()[i]->getnome()){
+                if(gerenciamentop[j]==false && p->getProdutos()[j]->getnome() == p->getProdutos()[i]->getnome()){
                     contador++;
                     gerenciamentop[j]=true;
                 }
