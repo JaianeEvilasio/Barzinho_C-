@@ -12,7 +12,6 @@ set(SOURCES
     MainWindow.cpp
     Cliente.cpp
     Pedido.cpp
-    Bebidas.cpp
     Barzinho.cpp
 )
 
