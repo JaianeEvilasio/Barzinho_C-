@@ -3,7 +3,7 @@
 
 #include "Produto.h"
 #include "Pedido.h"
-#include <sqlite3.h>
+#include "sqlite3.h"
 
 class Barzinho {  
 private:

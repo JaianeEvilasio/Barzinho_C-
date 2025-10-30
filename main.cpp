@@ -1,3 +1,18 @@
+#include <QApplication>
+#include "mainwindow.h"
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv); //inicializa Qt
+
+    MainWindow w;
+    w.show();
+
+    return app.exec()
+}
+
+
+
+/*
 #include <iostream>
 #include <string>
 #include "Barzinho.h"
@@ -5,7 +20,7 @@
 #include "Aperitivo.h"
 #include "Cliente.h"
 #include "Pedido.h"
-#include <sqlite3.h>
+#include "sqlite3.h"
 using namespace std;
 
 //criando funcao do banco de dados
@@ -121,4 +136,3 @@ int main() {
 
     return 0;
 }
-

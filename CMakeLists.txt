@@ -13,6 +13,7 @@ set(SOURCES
     Cliente.cpp
     Pedido.cpp
     Barzinho.cpp
+    sqlite3.c
 )
 
 set(HEADERS
@@ -23,10 +24,10 @@ set(HEADERS
     Aperitivo.h
     Barzinho.h
     Produto.h
+    sqlite3.h
 )
 
-add_executable(Barzinho ${SOURCES} ${HEADERS} MainWindow.ui
-    mainwindow.h mainwindow.cpp mainwindow.ui)
+add_executable(Barzinho ${SOURCES} ${HEADERS} mainwindow.ui)
 
 target_link_libraries(Barzinho Qt6::Widgets)
 
