@@ -25,7 +25,8 @@ set(HEADERS
     Produto.h
 )
 
-add_executable(Barzinho ${SOURCES} ${HEADERS} MainWindow.ui)
+add_executable(Barzinho ${SOURCES} ${HEADERS} MainWindow.ui
+    mainwindow.h mainwindow.cpp mainwindow.ui)
 
 target_link_libraries(Barzinho Qt6::Widgets)
 
