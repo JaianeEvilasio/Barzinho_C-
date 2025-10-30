@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include "Aperitivo.h"
+#include "Barzinho.h"
+#include "Bebidas.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
     // alocando memória para o objeto que representa sua interface visual
