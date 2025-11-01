@@ -27,7 +27,10 @@ set(HEADERS
     sqlite3.h
 )
 
-add_executable(Barzinho ${SOURCES} ${HEADERS} mainwindow.ui)
+add_executable(Barzinho ${SOURCES} ${HEADERS} mainwindow.ui
+    telacardapio.ui
+    telacardapio.ui
+    telacardapio.h telacardapio.cpp telacardapio.ui)
 
 target_link_libraries(Barzinho Qt6::Widgets)
 

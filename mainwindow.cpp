@@ -4,6 +4,9 @@
 #include "Aperitivo.h"
 #include "Barzinho.h"
 #include "Bebidas.h"
+#include "telacardapio.h"
+
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
     // alocando memória para o objeto que representa sua interface visual
@@ -26,8 +29,31 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::on_pushButtonTeste_clicked() {
+    QString nomeCliente = ui->lineEditNome->text().trimmed();
 
-    QMessageBox::information(this, "Botão clicado", "Você clicou no botão!");
+    if (nomeCliente.isEmpty()) {
+        QMessageBox::warning(this, "Aviso", "Digite seu nome antes de continuar!");
+        return;
+    }
+
+    // Salva no banco
+    sqlite3_stmt *stmt;
+    const char* sql = "INSERT INTO pedidos(cliente, item, quantidade, total) VALUES(?, '', 0, 0)";
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
+        QMessageBox::critical(this, "Erro", "Erro ao preparar query SQL");
+        return;
+    }
+    sqlite3_bind_text(stmt, 1, nomeCliente.toUtf8().constData(), -1, SQLITE_TRANSIENT);
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        QMessageBox::critical(this, "Erro", "Erro ao salvar nome do cliente no banco");
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_finalize(stmt);
+    TelaCardapio *cardapio = new TelaCardapio(this);
+    cardapio->show();
+
+
 }
 
 void MainWindow::funcaotabela() {
