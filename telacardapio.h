@@ -1,14 +1,14 @@
 #ifndef TELACARDAPIO_H
 #define TELACARDAPIO_H
 #include "Produto.h"
-
 #include <QMainWindow>
+#include "sqlite3.h"
 
 namespace Ui {
-class TelaCardapio;  // 👈 T maiúsculo
+class TelaCardapio;
 }
 
-class TelaCardapio : public QMainWindow  // 👈 T maiúsculo
+class TelaCardapio : public QMainWindow
 {
     Q_OBJECT
 
@@ -17,7 +17,9 @@ public:
     ~TelaCardapio();
 
 private:
-    Ui::TelaCardapio *ui;  // 👈 T maiúsculo
+    Ui::TelaCardapio *ui;
+
+    void carregarCardapio();
 };
 
 #endif // TELACARDAPIO_H

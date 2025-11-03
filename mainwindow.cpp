@@ -79,6 +79,19 @@ void MainWindow::funcaotabela() {
     sqlite3_exec(db,sql_pedidos,nullptr,nullptr,&errMSG);
 }
 
+void MainWindow::adicionaraobanco(const QString& nome, double preco, const QString& categoria) {
+    QString sql = QString(
+        "INSERT INTO cardapio (nome, preco, categoria)"
+        "VALUES ('%1', %2, '%3')"
+                      ).arg(nome).arg(preco).arg(categoria);
+
+    char* errMsg = nullptr;
+    if (sqlite3_exec(db, sql.toUtf8().constData(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        qDebug() << "Erro ao inserir produto:" << errMsg;
+        sqlite3_free(errMsg);
+    }
+}
+
 void MainWindow::carregarcardapio() {
     //aperitivos
     b->adicionaProduto(new Aperitivo("Caldinho", 8.00));

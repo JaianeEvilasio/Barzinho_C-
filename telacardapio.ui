@@ -43,7 +43,22 @@
      </widget>
     </item>
     <item>
-     <widget class="QTableWidget" name="tableProdutos"/>
+     <widget class="QTableWidget" name="tabelaBebidas">
+      <property name="columnCount">
+       <number>2</number>
+      </property>
+      <column/>
+      <column/>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tabelaAperitivos">
+      <property name="columnCount">
+       <number>2</number>
+      </property>
+      <column/>
+      <column/>
+     </widget>
     </item>
     <item>
      <widget class="QLineEdit" name="lineEdit"/>
