@@ -119,4 +119,30 @@ void MainWindow::carregarcardapio() {
     b->adicionaProduto(new Bebidas("Sex on the Beach", 23.00));
     b->adicionaProduto(new Bebidas("Coca-Cola Zero", 6.00));
     b->adicionaProduto(new Bebidas("Agua", 2.00));
+
+
+    sqlite3_stmt* stmt;
+    const char* sqlCheck = "SELECT COUNT(*) FROM cardapio;";
+    int count=0;
+
+    if (count==0) {
+        adicionaraobanco("Caldinho", 8.00, "aperitivo");
+        adicionaraobanco("Batatas Fritas", 10.00, "aperitivo");
+        adicionaraobanco("Bolinhos de Bacalhau", 12.00, "aperitivo");
+        adicionaraobanco("Espetinho de Frango", 15.00, "aperitivo");
+        adicionaraobanco("Espetinho de Frango com Bacon", 16.00, "aperitivo");
+
+        adicionaraobanco("Brahma Chopp", 6.00, "bebida");
+        adicionaraobanco("Corona Long Neck", 10.00, "bebida");
+        adicionaraobanco("Heineken Long Neck", 12.00, "bebida");
+        adicionaraobanco("Caipirinha", 8.00, "bebida");
+        adicionaraobanco("Sangria", 18.00, "bebida");
+        adicionaraobanco("Negroni", 18.00, "bebida");
+        adicionaraobanco("Pina Colada", 18.00, "bebida");
+        adicionaraobanco("Aperol", 25.00, "bebida");
+        adicionaraobanco("Sex on the Beach", 23.00, "bebida");
+        adicionaraobanco("Coca-Cola Zero", 6.00, "bebida");
+        adicionaraobanco("Agua", 2.00, "bebida");
+
+    }
 }

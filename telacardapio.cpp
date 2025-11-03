@@ -22,10 +22,12 @@ TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco) :
     ui->tabelaBebidas->setColumnCount(2);
     QStringList headerBebidas{"Nome", "Preço"};
     ui->tabelaBebidas->setHorizontalHeaderLabels(headerBebidas);
+    ui->tabelaBebidas->setEditTriggers(QAbstractItemView::NoEditTriggers); // impede que o cliente altere o texto da tabela
 
     ui->tabelaAperitivos->setColumnCount(2);
     QStringList headerAperitivos{"Nome", "Preço"};
     ui->tabelaAperitivos->setHorizontalHeaderLabels(headerAperitivos);
+    ui->tabelaAperitivos->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // esticando as colunas para ocuparem toda a tabela
     ui->tabelaBebidas->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
