@@ -29,32 +29,31 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::on_pushButtonTeste_clicked() {
-    QString nomeCliente = ui->lineEditNome->text().trimmed();
 
-    if (nomeCliente.isEmpty()) {
-        QMessageBox::warning(this, "Aviso", "Digite seu nome antes de continuar!");
+    QString nomeCliente = ui->lineEditNome->text();
+
+    if(nomeCliente.isEmpty()) {
+        QMessageBox::warning(this, "Atenção", "Digite seu nome antes de continuar!");
         return;
     }
 
-    // Salva no banco
-    sqlite3_stmt *stmt;
-    const char* sql = "INSERT INTO pedidos(cliente, item, quantidade, total) VALUES(?, '', 0, 0)";
-    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
-        QMessageBox::critical(this, "Erro", "Erro ao preparar query SQL");
+    // Inserir o cliente no banco
+    QString sql = QString("INSERT INTO pedidos (cliente) VALUES ('%1')").arg(nomeCliente);
+    char* errMsg = nullptr;
+    if(sqlite3_exec(db, sql.toUtf8().constData(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        QMessageBox::critical(this, "Erro", QString("Falha ao salvar cliente: %1").arg(errMsg));
+        sqlite3_free(errMsg);
         return;
     }
-    sqlite3_bind_text(stmt, 1, nomeCliente.toUtf8().constData(), -1, SQLITE_TRANSIENT);
-    if (sqlite3_step(stmt) != SQLITE_DONE) {
-        QMessageBox::critical(this, "Erro", "Erro ao salvar nome do cliente no banco");
-        sqlite3_finalize(stmt);
-        return;
-    }
-    sqlite3_finalize(stmt);
+
+    // Abrir tela do cardápio
     TelaCardapio *cardapio = new TelaCardapio(this);
     cardapio->show();
 
-
 }
+
+
+
 
 void MainWindow::funcaotabela() {
     const char* sql_cardapio =

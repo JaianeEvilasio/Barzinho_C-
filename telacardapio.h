@@ -1,5 +1,6 @@
 #ifndef TELACARDAPIO_H
 #define TELACARDAPIO_H
+#include "Produto.h"
 
 #include <QMainWindow>
 

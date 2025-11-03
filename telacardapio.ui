@@ -43,6 +43,9 @@
      </widget>
     </item>
     <item>
+     <widget class="QTableWidget" name="tableProdutos"/>
+    </item>
+    <item>
      <widget class="QLineEdit" name="lineEdit"/>
     </item>
    </layout>
