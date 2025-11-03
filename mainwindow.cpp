@@ -57,7 +57,7 @@ void MainWindow::on_pushButtonTeste_clicked() {
 
 
 
-void MainWindow::funcaotabela() {
+void MainWindow::funcaotabela() { //Criando as 2 tabelas que usaremos, a do cardapio e a dos pedidos.
     const char* sql_cardapio =
         "CREATE TABLE IF NOT EXISTS cardapio("
         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -80,6 +80,8 @@ void MainWindow::funcaotabela() {
 }
 
 void MainWindow::carregarcardapio() {
+    //Agora, com a funcao adicionaProduto, montando o cardapio!
+
     //aperitivos
     b->adicionaProduto(new Aperitivo("Caldinho", 8.00));
     b->adicionaProduto(new Aperitivo("Batatas Fritas", 10.00));
