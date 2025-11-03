@@ -15,6 +15,21 @@ O projeto consiste em um sistema em modo console para um "Barzinho", que apresen
 * Marcos Silva
 
 ## Estrutura do Projeto 
+```
+├── Aperitivo.h
+├── Barzinho.cpp
+├── Barzinho.h
+├── Bebidas.h
+├── Cliente.cpp
+├── Cliente.h
+├── Pedido.cpp
+├── Pedido.h
+├── Produto.h
+├── README.md
+├── barzinho.exe
+├── main.cpp
+└── programa.exe
+```
 
 ## Arquitetura do Projeto
 Este projeto implementa um sistema simples de pedidos para um bar (Barzinho), escrito em C++ e orientado a objetos. O núcleo é a classe `Barzinho`, que mantém o cardápio (produtos) e armazena pedidos finalizados. Produtos são modelados por uma hierarquia (`Produto` → `Bebidas` / `Aperitivo`). A aplicação é de console (CLI) e usa herança e polimorfismo para exibir itens.
@@ -52,7 +67,31 @@ Este projeto implementa um sistema simples de pedidos para um bar (Barzinho), es
 
 ## Instruções de Execução
 
-* falta fazer rsrsrrsrrrsrs
+Para compilar e executar este projeto, você precisará de:
+
+* **Qt6** (ou Qt5) e **CMake**
+* **Kit de Compilação:** MinGW (ou MSVC)
+* **Qt Creator** (Opcional, mas recomendado para facilitar)
+
+## Compilação (via CMake)
+
+Se você não estiver usando o Qt Creator, pode compilar o projeto manualmente pela linha de comando.
+
+1.  Abra um terminal na pasta raiz do projeto.
+2.  Execute os seguintes comandos em ordem:
+
+    ```bash
+    # 1. Cria um diretório 'build' e entra nele
+    mkdir build && cd build
+    
+    # 2. Prepara os arquivos de build (makefiles, etc.)
+    cmake ..
+    
+    # 3. Compila o projeto
+    cmake --build .
+    ```
+
+3.  Após a compilação, o executável estará localizado dentro da pasta `build`.
 
 ---
 
