@@ -13,11 +13,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this); // carrega o layout e os widgets definidos em .ui
 
+    sqlite3* db=nullptr;
     if (sqlite3_open("barzinho.db", &db)) {
         QMessageBox::critical(this, "erro", QString("falha ao abrir banco %1").arg(sqlite3_errmsg(db)));
         return;
     }
 
+    sqlite3_exec(db, "PRAGMA journal_mode=WAL;", nullptr, nullptr, nullptr); // permite leituras e escritas simultâneas
+
+    this->db = db;
     funcaotabela();
     b = new Barzinho(db);
     carregarcardapio();
@@ -25,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow()
 {
+    if (db) sqlite3_close(db);
     delete ui;
 }
 
@@ -47,7 +52,7 @@ void MainWindow::on_pushButtonTeste_clicked() {
     }
 
     // abrir tela do cardápio
-    TelaCardapio *cardapio = new TelaCardapio(this);
+    TelaCardapio *cardapio = new TelaCardapio(this, db);
     cardapio->show();
 
     this->hide();

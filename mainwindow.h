@@ -28,6 +28,7 @@ private:
 
     void funcaotabela();
     void carregarcardapio();
+    void adicionaraobanco(const QString&, double, const QString&);
 };
 
 #endif // MAINWINDOW_H

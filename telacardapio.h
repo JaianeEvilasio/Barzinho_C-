@@ -13,11 +13,12 @@ class TelaCardapio : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit TelaCardapio(QWidget *parent = nullptr);
+    explicit TelaCardapio(QWidget *parent = nullptr, sqlite3* banco = nullptr);
     ~TelaCardapio();
 
 private:
     Ui::TelaCardapio *ui;
+    sqlite3* db;
 
     void carregarCardapio();
 };

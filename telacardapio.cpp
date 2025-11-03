@@ -3,22 +3,28 @@
 #include <QMessageBox>
 #include <QTableWidget>
 
-TelaCardapio::TelaCardapio(QWidget *parent) :
+TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco) :
     QMainWindow(parent),
-    ui(new Ui::TelaCardapio)
+    ui(new Ui::TelaCardapio),
+    db(banco)
 {
     ui->setupUi(this);
     setWindowTitle("Cardápio do Barzinho");
 
+    if (!db) {
+        QMessageBox::critical(this, "Erro", "Não foi possível abrir o banco");
+        return;
+    }
+
+    sqlite3_exec(db, "PRAGMA journal_mode=WAL;", nullptr, nullptr, nullptr);
+
     // duas colunas para as tabelas dos produtos: "nome" e "preço"
     ui->tabelaBebidas->setColumnCount(2);
-    QStringList headerBebidas;
-    headerBebidas << "Nome" << "Preço";
+    QStringList headerBebidas{"Nome", "Preço"};
     ui->tabelaBebidas->setHorizontalHeaderLabels(headerBebidas);
 
-    ui->tabelaBebidas->setColumnCount(2);
-    QStringList headerAperitivos;
-    headerAperitivos << "Nome" << "Preço";
+    ui->tabelaAperitivos->setColumnCount(2);
+    QStringList headerAperitivos{"Nome", "Preço"};
     ui->tabelaAperitivos->setHorizontalHeaderLabels(headerAperitivos);
 
     // esticando as colunas para ocuparem toda a tabela
@@ -34,9 +40,7 @@ TelaCardapio::~TelaCardapio()
 }
 
 void TelaCardapio::carregarCardapio() {
-    sqlite3* db;
-    if (sqlite3_open("barzinho.db", &db)) {
-        QMessageBox::critical(this, "Erro", "Não foi possível abrir o banco de dados");
+    if (!db) {
         return;
     }
 
@@ -80,6 +84,4 @@ void TelaCardapio::carregarCardapio() {
         }
     }
     sqlite3_finalize(stmt);
-
-    sqlite3_close(db);
 }
