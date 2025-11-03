@@ -37,7 +37,7 @@ void MainWindow::on_pushButtonTeste_clicked() {
         return;
     }
 
-    // Inserir o cliente no banco
+    // inserir o cliente no banco
     QString sql = QString("INSERT INTO pedidos (cliente) VALUES ('%1')").arg(nomeCliente);
     char* errMsg = nullptr;
     if(sqlite3_exec(db, sql.toUtf8().constData(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
@@ -46,9 +46,11 @@ void MainWindow::on_pushButtonTeste_clicked() {
         return;
     }
 
-    // Abrir tela do cardápio
+    // abrir tela do cardápio
     TelaCardapio *cardapio = new TelaCardapio(this);
     cardapio->show();
+
+    this->hide();
 
 }
 
