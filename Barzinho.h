@@ -3,6 +3,7 @@
 
 #include "Produto.h"
 #include "Pedido.h"
+#include "sqlite3.h"
 
 class Barzinho {  
 private:
@@ -12,9 +13,11 @@ private:
 
     Pedido* pedidos[100];
     int qtdPedidos;
+    //BANCO DE DADOS
+    sqlite3* db;
 
 public:
-    Barzinho();
+    Barzinho(sqlite3* bd);
     ~Barzinho();
 
     void adicionaProduto(Produto* p);  
@@ -24,6 +27,8 @@ public:
     void adicionarpedido(Pedido* p);
     void mostrarpedidos() const;
     void mostrarpocategoria() const;
+
+    void salvarpedidobd(Pedido* p);
 };
 
 #endif
