@@ -90,28 +90,6 @@ void MainWindow::adicionaraobanco(const QString& nome, double preco, const QStri
 }
 
 void MainWindow::carregarcardapio() {
-    //aperitivos
-    b->adicionaProduto(new Aperitivo("Caldinho", 8.00));
-    b->adicionaProduto(new Aperitivo("Batatas Fritas", 10.00));
-    b->adicionaProduto(new Aperitivo("Bolinhos de Bacalhau", 12.00));
-    b->adicionaProduto(new Aperitivo("Espetinho de Frango", 15.00));
-    b->adicionaProduto(new Aperitivo("Espetinho de Carne", 15.50));
-    b->adicionaProduto(new Aperitivo("Espetinho de Frango com Bacon ", 16.00));
-
-    //bebidas
-    b->adicionaProduto(new Bebidas("Brahma Chopp", 6.00));  //esse new ele serve para você guardar os objetos dentro do heap e nao deixar so na pilha
-    //inclusive, é por isso que temos que usar o "delete"
-    b->adicionaProduto(new Bebidas("Corona Long Neck", 10.00));
-    b->adicionaProduto(new Bebidas("Heineken Long Neck", 12.00));
-    b->adicionaProduto(new Bebidas("Caipirinha", 8.00));
-    b->adicionaProduto(new Bebidas("Sangria", 18.00));
-    b->adicionaProduto(new Bebidas("Negroni", 18.00));
-    b->adicionaProduto(new Bebidas("Pina Colada", 18.00));
-    b->adicionaProduto(new Bebidas("Aperol", 25.00));
-    b->adicionaProduto(new Bebidas("Sex on the Beach", 23.00));
-    b->adicionaProduto(new Bebidas("Coca-Cola Zero", 6.00));
-    b->adicionaProduto(new Bebidas("Agua", 2.00));
-
 
     sqlite3_stmt* stmt;
     const char* sqlCheck = "SELECT COUNT(*) FROM cardapio;";
@@ -126,6 +104,33 @@ void MainWindow::carregarcardapio() {
     sqlite3_finalize(stmt);
 
     if (count==0) {
+
+        //criando os produtos na memória
+        //aperitivos
+        b->adicionaProduto(new Aperitivo("Caldinho", 8.00));
+        b->adicionaProduto(new Aperitivo("Batatas Fritas", 10.00));
+        b->adicionaProduto(new Aperitivo("Bolinhos de Bacalhau", 12.00));
+        b->adicionaProduto(new Aperitivo("Espetinho de Frango", 15.00));
+        b->adicionaProduto(new Aperitivo("Espetinho de Carne", 15.50));
+        b->adicionaProduto(new Aperitivo("Espetinho de Frango com Bacon ", 16.00));
+
+        //bebidas
+        b->adicionaProduto(new Bebidas("Brahma Chopp", 6.00));  //esse new ele serve para você guardar os objetos dentro do heap e nao deixar so na pilha
+        //inclusive, é por isso que temos que usar o "delete"
+        b->adicionaProduto(new Bebidas("Corona Long Neck", 10.00));
+        b->adicionaProduto(new Bebidas("Heineken Long Neck", 12.00));
+        b->adicionaProduto(new Bebidas("Caipirinha", 8.00));
+        b->adicionaProduto(new Bebidas("Sangria", 18.00));
+        b->adicionaProduto(new Bebidas("Negroni", 18.00));
+        b->adicionaProduto(new Bebidas("Pina Colada", 18.00));
+        b->adicionaProduto(new Bebidas("Aperol", 25.00));
+        b->adicionaProduto(new Bebidas("Sex on the Beach", 23.00));
+        b->adicionaProduto(new Bebidas("Coca-Cola Zero", 6.00));
+        b->adicionaProduto(new Bebidas("Agua", 2.00));
+
+
+        //adicionando os produtos ao banco
+
         adicionaraobanco("Caldinho", 8.00, "aperitivo");
         adicionaraobanco("Batatas Fritas", 10.00, "aperitivo");
         adicionaraobanco("Bolinhos de Bacalhau", 12.00, "aperitivo");
