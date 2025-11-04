@@ -23,9 +23,10 @@ TelaFinal::TelaFinal(QWidget *parent, sqlite3* db, Pedido* pedido) :
 
 TelaFinal::~TelaFinal()
 {
+    //destrutor da telafinal
     delete ui;
 }
-
+//ao clicar no botao voltar, o cliente é direcionado a tela do cardapio, mantendo o pedido
 void TelaFinal::on_btnVoltar_clicked()
 {
     this->close();  // Fecha a TelaFinal
@@ -33,7 +34,7 @@ void TelaFinal::on_btnVoltar_clicked()
     cardapio->show(); // Abre a TelaCardapio
 }
 
-
+// o botão fechar pedido, encerra o programa
 void TelaFinal::on_btnFecharPedido_clicked()
 {
     QApplication::quit();
@@ -47,20 +48,20 @@ void TelaFinal::carregarTabela()
         return;
     }
 
-    ui->tabelaQuantidades->setRowCount(0);
+    ui->tabelaQuantidades->setRowCount(0); //limpa a tabela antes de preencher
     double totalGeral = 0.0;
 
     int qtdProdutos = pedidoAtual->getQtd();
     Produto* const* produtos = pedidoAtual->getProdutos();
 
-    bool gerenciamentop[50] = {false};
+    bool gerenciamentop[50] = {false}; //para controlar produtos ja contabilizados
     int linha = 0;
-
+    //percorre todos os produtos do pedido
     for (int i=0; i<qtdProdutos; i++) {
         if (!gerenciamentop[i]) {
             int contador = 1;
             double preco = produtos[i]->getpreco();
-
+            //conta quantos produtos iguais tem
             for (int j= i+1; j<qtdProdutos; j++) {
                 if (!gerenciamentop[j] && produtos[j]->getnome() == produtos[i]->getnome()) {
                     contador++;
@@ -69,8 +70,8 @@ void TelaFinal::carregarTabela()
             }
 
             double totalItem = contador * preco;
-            totalGeral += totalItem;
-
+            totalGeral += totalItem;//total do pedido
+            //adiciona uma linha na tabela (item, quantidade e total)
             ui->tabelaQuantidades->insertRow(linha);
             ui->tabelaQuantidades->setItem(linha, 0, new QTableWidgetItem(QString::fromStdString(produtos[i]->getnome())));
             ui->tabelaQuantidades->setItem(linha, 1, new QTableWidgetItem(QString::number(contador)));
@@ -78,6 +79,6 @@ void TelaFinal::carregarTabela()
             linha++;
         }
     }
-
+    //mostra o total do pedido
     ui->labelTotal->setText("Total: R$ " + QString::number(totalGeral, 'f', 2));
 }

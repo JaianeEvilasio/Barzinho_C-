@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
 
     sqlite3_exec(db, "PRAGMA journal_mode=WAL;", nullptr, nullptr, nullptr); // permite leituras e escritas simultâneas
-
+    // Abrindo o banco de dados "barzinho.db".
+    // Se não conseguir, mostra uma mensagem de erro e para por aqui.
     this->db = db;
     funcaotabela();
     b = new Barzinho(db);
@@ -29,14 +30,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow()
 {
-    if (db) sqlite3_close(db);
-    delete ui;
+    if (db) sqlite3_close(db); //fecha o banco de dados se ele estiver aberto
+    delete ui;  // Libera a memória usada pela interface
 }
 
 void MainWindow::on_pushButtonTeste_clicked() {
 
-    QString nomeCliente = ui->lineEditNome->text();
-
+    QString nomeCliente = ui->lineEditNome->text();//pega o nome do usuario
+    //se não digitou nada, avisa e não deixa continuar
     if(nomeCliente.isEmpty()) {
         QMessageBox::warning(this, "Atenção", "Digite seu nome antes de continuar!");
         return;
@@ -52,7 +53,7 @@ void MainWindow::on_pushButtonTeste_clicked() {
 
 
 
-
+//cria as tabelas do banco caso ainda não existam
 void MainWindow::funcaotabela() {
     const char* sql_cardapio =
         "CREATE TABLE IF NOT EXISTS cardapio("
@@ -69,12 +70,12 @@ void MainWindow::funcaotabela() {
         "quantidade INTEGER,"
         "total REAL);";
 
-    //tabelas montadas, passando pro sqlite junto cm a errmsg
+    //executa os comandos no banco de dados
     char* errMSG= nullptr;
     sqlite3_exec(db,sql_cardapio,nullptr,nullptr,&errMSG);
     sqlite3_exec(db,sql_pedidos,nullptr,nullptr,&errMSG);
 }
-
+//adiciona os produtos no banco
 void MainWindow::adicionaraobanco(const QString& nome, double preco, const QString& categoria) {
     QString sql = QString(
         "INSERT INTO cardapio (nome, preco, categoria)"
@@ -87,16 +88,16 @@ void MainWindow::adicionaraobanco(const QString& nome, double preco, const QStri
         sqlite3_free(errMsg);
     }
 }
-
+//carrega o cardapio
 void MainWindow::carregarcardapio() {
 
     sqlite3_stmt* stmt;
     const char* sqlCheck = "SELECT COUNT(*) FROM cardapio;";
     int count=0;
-
+    //ver se o produto ja esta cadastrado
     if (sqlite3_prepare_v2(db, sqlCheck, -1, &stmt, nullptr) == SQLITE_OK) {
         if (sqlite3_step(stmt) == SQLITE_ROW) {
-            count = sqlite3_column_int(stmt, 0);
+            count = sqlite3_column_int(stmt, 0); //quantidade do produto
         }
     }
 

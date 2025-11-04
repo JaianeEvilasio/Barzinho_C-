@@ -10,28 +10,29 @@
 #include <QHeaderView>
 #include "telafinal.h"
 
+// inicio da telacardapio
 TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco, Pedido* pedidoExistente, const QString& nomeClienteSalvo) :
     QWidget(parent),
     ui(new Ui::TelaCardapio),
     db(banco),
     pedidoAtual(pedidoExistente)
 {
-    ui->setupUi(this);
-    setWindowTitle("Cardápio do Barzinho");
-
+    ui->setupUi(this); //carrega o layout da UI
+    setWindowTitle("Cardápio do Barzinho");//titulo da janeka
+    //atualiza o label se o nome do cliente foi passado
     if (!nomeClienteSalvo.isEmpty()) {
         setNomeCliente(nomeClienteSalvo);
     }
-
+    //cria um novo pedido se o cliente não tiver
     if (!pedidoAtual) {
         pedidoAtual = new Pedido(Cliente(nomeCliente.toStdString()));
     }
-
+    //verifica se o banco de dados esta aberto
     if (!db) {
         QMessageBox::critical(this, "Erro", "Não foi possível abrir o banco");
         return;
     }
-
+    //configura o sqlite
     sqlite3_exec(db, "PRAGMA journal_mode=WAL;", nullptr, nullptr, nullptr);
 
     // duas colunas para as tabelas dos produtos: "nome" e "preço"
@@ -39,7 +40,7 @@ TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco, Pedido* pedidoExiste
     QStringList headerBebidas{"Nome", "Preço"};
     ui->tabelaBebidas->setHorizontalHeaderLabels(headerBebidas);
     ui->tabelaBebidas->setEditTriggers(QAbstractItemView::NoEditTriggers); // impede que o cliente altere o texto da tabela
-
+    //tabela de aperitivos
     ui->tabelaAperitivos->setColumnCount(2);
     QStringList headerAperitivos{"Nome", "Preço"};
     ui->tabelaAperitivos->setHorizontalHeaderLabels(headerAperitivos);
@@ -54,12 +55,12 @@ TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco, Pedido* pedidoExiste
 
     carregarCardapio(); // chamando para mostrar o cardápio
 }
-
+//destrutor da telacardapio
 TelaCardapio::~TelaCardapio()
 {
-    delete ui;
+    delete ui; //libera memoria
 }
-
+//função que carrega os produtos do banco de dados
 void TelaCardapio::carregarCardapio() {
     if (!db) {
         return;
@@ -72,11 +73,11 @@ void TelaCardapio::carregarCardapio() {
     if (sqlite3_prepare_v2(db, sqlBebidas, -1, &stmt, nullptr) == SQLITE_OK) {
         ui->tabelaBebidas->setRowCount(0);
         int row=0;
-
+        // percorre o resultado da consulta
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             QString nome = QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
             double preco = sqlite3_column_double(stmt, 1);
-
+            //coloca os dados na tabela
             ui->tabelaBebidas->insertRow(row);
             ui->tabelaBebidas->setItem(row, 0, new QTableWidgetItem(nome));
             ui->tabelaBebidas->setItem(row, 1, new QTableWidgetItem(QString::number(preco, 'f', 2)));
@@ -106,7 +107,7 @@ void TelaCardapio::carregarCardapio() {
     }
     sqlite3_finalize(stmt);
 }
-
+//atualiza p label de boas vindas com o nome digitado
 void TelaCardapio::setNomeCliente(const QString &nome) {
     nomeCliente = nome;
     ui->labelBemVindo->setText(QString("Bem-vindo(a), %1!").arg(nomeCliente));
@@ -114,7 +115,7 @@ void TelaCardapio::setNomeCliente(const QString &nome) {
     ui->labelBemVindo->setStyleSheet("font-weight: font-size: 16px;");
 }
 
-
+// botão adicionar
 void TelaCardapio::on_botaoAdicionar_clicked() {
     QTableWidget* tabelaSelecionada = nullptr;
 
@@ -137,7 +138,7 @@ void TelaCardapio::on_botaoAdicionar_clicked() {
     // verificando se o cliente já tem o produto no pedido
 
     Produto* prod = nullptr;
-
+    // cria o produto correto de acordo com o que foi selecionado na tabela
     if (tabelaSelecionada == ui->tabelaBebidas) {
         prod = new Bebidas(nomeProduto.toStdString(), preco);
 
@@ -149,13 +150,13 @@ void TelaCardapio::on_botaoAdicionar_clicked() {
         pedidoAtual = new Pedido(Cliente(nomeCliente.toStdString()));
     }
 
-    pedidoAtual->adicionaProduto(prod);
+    pedidoAtual->adicionaProduto(prod); //adiociona ao pedido
 
     QMessageBox::information(this, "Pedido", QString("%1 adicionado ao pedido!").arg(nomeProduto));
 
     tabelaSelecionada->clearSelection();
 }
-
+// botão finalizar
 void TelaCardapio::on_botaoFinalizar_clicked()
 {
     this->close();  // fecha a tela do cardápio
