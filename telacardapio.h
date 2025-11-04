@@ -22,6 +22,7 @@ public:
 
 private slots:
     void on_botaoAdicionar_clicked();
+    void on_botaoFinalizar_clicked();
 
 private:
     Ui::TelaCardapio *ui;

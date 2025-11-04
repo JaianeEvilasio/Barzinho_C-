@@ -1,5 +1,6 @@
 #include "telafinal.h"
 #include "ui_telafinal.h"
+#include "telacardapio.h"
 
 TelaFinal::TelaFinal(QWidget *parent, sqlite3* db, Pedido* pedido) :
     QWidget(parent),
