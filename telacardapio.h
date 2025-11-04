@@ -3,6 +3,7 @@
 #include "Produto.h"
 #include <QMainWindow>
 #include "sqlite3.h"
+#include "Pedido.h"
 
 
 namespace Ui {
@@ -26,6 +27,8 @@ private:
     Ui::TelaCardapio *ui;
     sqlite3* db;
     QString nomeCliente;
+
+    Pedido* pedidoAtual = nullptr;
 
     void carregarCardapio();
 };

@@ -2,6 +2,12 @@
 #include "ui_telacardapio.h"
 #include <QMessageBox>
 #include <QTableWidget>
+#include "Produto.h"
+#include "Cliente.h"
+#include "Barzinho.h"
+#include "Bebidas.h"
+#include "Aperitivo.h"
+#include <QHeaderView>
 
 TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco) :
     QWidget(parent),
@@ -30,8 +36,11 @@ TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco) :
     ui->tabelaAperitivos->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // esticando as colunas para ocuparem toda a tabela
-    ui->tabelaBebidas->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tabelaAperitivos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tabelaBebidas->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->tabelaBebidas->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+
+    ui->tabelaAperitivos->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->tabelaAperitivos->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 
     carregarCardapio(); // chamando para mostrar o cardápio
 }
@@ -92,6 +101,7 @@ void TelaCardapio::setNomeCliente(const QString &nome) {
     nomeCliente = nome;
 }
 
+
 void TelaCardapio::on_botaoAdicionar_clicked() {
     QTableWidget* tabelaSelecionada = nullptr;
 
@@ -113,52 +123,22 @@ void TelaCardapio::on_botaoAdicionar_clicked() {
 
     // verificando se o cliente já tem o produto no pedido
 
-    QString sqlSelect = QString(
-        "SELECT quantidade, total FROM pedidos WHERE cliente = '%1' AND item = '%2';"
-                            ).arg(nomeCliente).arg(nomeProduto);
+    Produto* prod = nullptr;
 
-    sqlite3_stmt* stmt;
-    int qtdAtual = 0;
-    double totalAtual = 0.0;
-    bool jaTem = false;
-
-    if (sqlite3_prepare_v2(db, sqlSelect.toUtf8().constData(), -1, &stmt, nullptr) == SQLITE_OK) {
-        if (sqlite3_step(stmt) == SQLITE_ROW) {
-            jaTem = true;
-            qtdAtual = sqlite3_column_int(stmt, 0);
-            totalAtual = sqlite3_column_double(stmt, 1);
-        }
-    }
-
-    sqlite3_finalize(stmt);
-
-    if (jaTem) {
-        int qtdNova = qtdAtual + 1;
-        double totalNovo = totalAtual + preco;
-
-        QString sqlUpdate = QString(
-                                "UPDATE pedidos SET quantidade = %1, total = %2 WHERE cliente = '%3' AND item = '%4';"
-                                ).arg(qtdNova).arg(totalNovo).arg(nomeCliente.replace("'", "''")).arg(nomeProduto);
-
-        if (sqlite3_exec(db, sqlUpdate.toUtf8().constData(), nullptr, nullptr, nullptr) != SQLITE_OK) {
-            QMessageBox::critical(this, "Erro", "Erro ao atualizar pedido");
-            return;
-        }
-
-        QMessageBox::information(this, "Pedido atualizado", QString("%1 atualizado! Nova quantidade: %2").arg(nomeProduto).arg(qtdNova));
+    if (tabelaSelecionada == ui->tabelaBebidas) {
+        prod = new Bebidas(nomeProduto.toStdString(), preco);
 
     } else {
-        char* errMsg = nullptr;
-        QString sql = QString ("INSERT INTO pedidos (cliente, item, quantidade, total) VALUES ('%1', '%2', 1, %3);").arg(nomeCliente.replace("'", "''")).arg(nomeProduto).arg(preco);
-
-        if (sqlite3_exec(db, sql.toUtf8().constData(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
-            QMessageBox::critical(this, "Erro", QString("Erro ao adicionar produto: %1").arg(errMsg ? errMsg : "erro desconhecido"));
-            if (errMsg) sqlite3_free(errMsg);
-            return;
-        }
-        QMessageBox::information(this, "Pedido", QString("%1 adicionado ao pedido!").arg(nomeProduto));
-
+        prod = new Aperitivo(nomeProduto.toStdString(), preco);
     }
+
+    if (!pedidoAtual) {
+        pedidoAtual = new Pedido(Cliente(nomeCliente.toStdString()));
+    }
+
+    pedidoAtual->adicionaProduto(prod);
+
+    QMessageBox::information(this, "Pedido", QString("%1 adicionado ao pedido!").arg(nomeProduto));
 
     tabelaSelecionada->clearSelection();
 }
