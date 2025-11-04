@@ -10,7 +10,7 @@ Pedido::~Pedido() {} //destrutor de pedido (vazio)
 
 
 
-void Pedido::adicionaProduto(Produto* p) { //
+void Pedido::adicionaProduto(Produto* p) { 
     if (qtd < 50) { //limite de 50
         produtos[qtd++] = p;
     } else {

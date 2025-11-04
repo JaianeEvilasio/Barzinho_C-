@@ -10,7 +10,7 @@ Barzinho::Barzinho(sqlite3* bd) : qtdProdutos(0), qtdPedidos(0), db(nullptr) {
         cout<<"Deu merda: "<< sqlite3_errmsg(db)<<endl;
         db=nullptr;
     }
-} //construtor, que cria um barzinho e tenta abrir o banco de daods
+} //Construtor, que cria um barzinho e tenta abrir o banco de daods
 
 Barzinho::~Barzinho() { // destrutor
     for (int i = 0; i < qtdProdutos; i++) // quando o destrutor é chamado tanto os objetos de cardapio quanto os pedidos sao deletados 
@@ -34,7 +34,7 @@ int Barzinho::getQuantidade() const {  //retorna a quantidade de produtos cadast
     return qtdProdutos;
 }
 
-void Barzinho::adicionarpedido(Pedido* p) { //quando um pedido é finalizado ele é guardado
+void Barzinho::adicionarpedido(Pedido* p) { //quando um pedido é finalizado ele é guardado em pedidos
     if (qtdPedidos < 100)
         pedidos[qtdPedidos++] = p;
 }
@@ -50,16 +50,16 @@ void Barzinho:: salvarpedidobd(Pedido* p){ //logica quase igual a de pedido cpp,
     int qtdpropedidos=p->getQtd();
     bool gerenciamentop[50];
 
-    for (int i=0; i<qtdpropedidos; i++) {
+    for (int i=0; i<qtdpropedidos; i++) { //inicializando tudo como false
         gerenciamentop[i]=false;
     }
 
     for (int i=0;i<qtdpropedidos;i++){
-        if(gerenciamentop[i]==false){
+        if(gerenciamentop[i]==false){ //Começando a analizar os itens do pedido com o contador em 1
             int contador=1;
             double preco=p->getProdutos()[i]->getpreco();
 
-            for (int j=i+1;j<qtdpropedidos;j++){
+            for (int j=i+1;j<qtdpropedidos;j++){ //Finalmente, checando a quantidade de cada item para adicionar corretamente no banco de dados
                 if(gerenciamentop[j]==false && p->getProdutos()[j]->getnome() == p->getProdutos()[i]->getnome()){
                     contador++;
                     gerenciamentop[j]=true;
@@ -68,7 +68,7 @@ void Barzinho:: salvarpedidobd(Pedido* p){ //logica quase igual a de pedido cpp,
 
         double totalporitem=contador*preco;
 
-        //agora add ao bd
+        //agora, add ao bd
         string sql= "INSERT INTO pedidos (cliente,item,quantidade,total) VALUES ('" +
                     p->getCliente().getnome() + "', '"+
                     p->getProdutos()[i]->getnome() + "', "+
@@ -92,7 +92,7 @@ void Barzinho::mostrarpocategoria() const { //mostrando tudo em categorias
 
     cout<<"===Aperitivos==="<<endl; //começando com aperetivos
     for(int i=0;i<qtdProdutos;i++){
-        if(dynamic_cast<Aperitivo*>(cardapio[i])){ //o dynamic cast serve pra averiguar se o tipo do produto é bebida
+        if(dynamic_cast<Aperitivo*>(cardapio[i])){ //o dynamic cast serve pra averiguar se o tipo do produto é aperitivo
             cout<< i+1<< "-";
             cardapio[i]->mostrar();
         }
@@ -103,7 +103,7 @@ void Barzinho::mostrarpocategoria() const { //mostrando tudo em categorias
     
     cout<<"===Bebidas==="<<endl; //agora bebidas
     for(int i=0;i<qtdProdutos;i++){
-        if(dynamic_cast<Bebidas*>(cardapio[i])){ //o dynamic cast serve pra averiguar se o tipo do produto é aperitivos
+        if(dynamic_cast<Bebidas*>(cardapio[i])){ //o dynamic cast serve pra averiguar se o tipo do produto é bebidas
             cout<< i+1<< "-";
             cardapio[i]->mostrar();
         }
