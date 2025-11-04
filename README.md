@@ -16,19 +16,38 @@ O projeto consiste em um sistema em modo console para um "Barzinho", que apresen
 
 ## Estrutura do Projeto 
 ```
-├── Aperitivo.h
-├── Barzinho.cpp
-├── Barzinho.h
-├── Bebidas.h
-├── Cliente.cpp
-├── Cliente.h
-├── Pedido.cpp
-├── Pedido.h
-├── Produto.h
-├── README.md
-├── barzinho.exe
-├── main.cpp
-└── programa.exe
+Barzinho_C-/
+    ├── .qtcreator/
+    │   └── CMakeLists.txt.user
+    ├── .gitignore
+    ├── Aperitivo.h
+    ├── Barzinho.cpp
+    ├── barzinho.db
+    ├── barzinho.exe
+    ├── Barzinho.h
+    ├── Bebidas.h
+    ├── Cliente.cpp
+    ├── Cliente.h
+    ├── CMakeLists.txt
+    ├── CMakeLists.txt.user
+    ├── main.cpp
+    ├── mainwindow.cpp
+    ├── mainwindow.h
+    ├── mainwindow.ui
+    ├── Pedido.cpp
+    ├── Pedido.h
+    ├── Produto.h
+    ├── programa.exe
+    ├── README.md
+    ├── sqlite3.c
+    ├── sqlite3.h
+    ├── sqlite3.o
+    ├── telacardapio.cpp
+    ├── telacardapio.h
+    ├── telacardapio.ui
+    ├── telafinal.cpp
+    ├── telafinal.h
+    └── telafinal.ui
 ```
 
 ## Arquitetura do Projeto
