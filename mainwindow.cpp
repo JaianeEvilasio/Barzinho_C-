@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this); // carrega o layout e os widgets definidos em .ui
 
-    sqlite3* db=nullptr;
     if (sqlite3_open("barzinho.db", &db)) {
         QMessageBox::critical(this, "erro", QString("falha ao abrir banco %1").arg(sqlite3_errmsg(db)));
         return;

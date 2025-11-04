@@ -1,5 +1,9 @@
 #ifndef PRODUTO_H
 #define PRODUTO_H
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QString>
+#include <QColor>
 
 //Nossa classe inicial, dessa classe mais abrangente faremos classes filhas.
 
@@ -22,6 +26,13 @@ public:
 
     virtual void mostrar() const {// Essa é a função que é modificada com base em qual produto esta sendo mostrado (polimorfismo)
         cout << nome << " (R$" << preco << ") - " << categoria << endl;
+    }
+
+    virtual void mostrarGUI(QTableWidget* tabela) const {
+        int linha = tabela->rowCount();
+        tabela->insertRow(linha);
+        tabela->setItem(linha, 0, new QTableWidgetItem(QString::fromStdString(nome)));
+        tabela->setItem(linha, 1, new QTableWidgetItem(QString::number(preco, 'f', 2)));
     }
 
     //getters

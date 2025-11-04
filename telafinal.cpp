@@ -71,12 +71,14 @@ void TelaFinal::carregarTabela()
 
             double totalItem = contador * preco;
             totalGeral += totalItem;//total do pedido
+
+            produtos[i]->mostrarGUI(ui->tabelaQuantidades);
+
             //adiciona uma linha na tabela (item, quantidade e total)
-            ui->tabelaQuantidades->insertRow(linha);
-            ui->tabelaQuantidades->setItem(linha, 0, new QTableWidgetItem(QString::fromStdString(produtos[i]->getnome())));
+            int linha = ui->tabelaQuantidades->rowCount() -1;
+
             ui->tabelaQuantidades->setItem(linha, 1, new QTableWidgetItem(QString::number(contador)));
             ui->tabelaQuantidades->setItem(linha, 2, new QTableWidgetItem(QString::number(totalItem, 'f', 2)));
-            linha++;
         }
     }
     //mostra o total do pedido
