@@ -31,7 +31,8 @@ add_executable(Barzinho ${SOURCES} ${HEADERS} mainwindow.ui
     telacardapio.ui
     telacardapio.ui
     telacardapio.h telacardapio.cpp telacardapio.ui
-    telafinal.h telafinal.cpp telafinal.ui)
+    telafinal.h telafinal.cpp telafinal.ui
+)
 
 target_link_libraries(Barzinho Qt6::Widgets)
 

@@ -42,17 +42,9 @@ void MainWindow::on_pushButtonTeste_clicked() {
         return;
     }
 
-    // inserir o cliente no banco
-    QString sql = QString("INSERT INTO pedidos (cliente) VALUES ('%1')").arg(nomeCliente);
-    char* errMsg = nullptr;
-    if(sqlite3_exec(db, sql.toUtf8().constData(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
-        QMessageBox::critical(this, "Erro", QString("Falha ao salvar cliente: %1").arg(errMsg));
-        sqlite3_free(errMsg);
-        return;
-    }
-
     // abrir tela do cardápio
-    TelaCardapio *cardapio = new TelaCardapio(this, db);
+    TelaCardapio *cardapio = new TelaCardapio(nullptr, db);
+    cardapio->setNomeCliente(nomeCliente);
     cardapio->show();
 
     this->hide();
@@ -124,6 +116,14 @@ void MainWindow::carregarcardapio() {
     sqlite3_stmt* stmt;
     const char* sqlCheck = "SELECT COUNT(*) FROM cardapio;";
     int count=0;
+
+    if (sqlite3_prepare_v2(db, sqlCheck, -1, &stmt, nullptr) == SQLITE_OK) {
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            count = sqlite3_column_int(stmt, 0);
+        }
+    }
+
+    sqlite3_finalize(stmt);
 
     if (count==0) {
         adicionaraobanco("Caldinho", 8.00, "aperitivo");
