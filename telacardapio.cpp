@@ -8,14 +8,24 @@
 #include "Bebidas.h"
 #include "Aperitivo.h"
 #include <QHeaderView>
+#include "telafinal.h"
 
-TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco) :
+TelaCardapio::TelaCardapio(QWidget *parent, sqlite3* banco, Pedido* pedidoExistente, const QString& nomeClienteSalvo) :
     QWidget(parent),
     ui(new Ui::TelaCardapio),
-    db(banco)
+    db(banco),
+    pedidoAtual(pedidoExistente)
 {
     ui->setupUi(this);
     setWindowTitle("Cardápio do Barzinho");
+
+    if (!nomeClienteSalvo.isEmpty()) {
+        setNomeCliente(nomeClienteSalvo);
+    }
+
+    if (!pedidoAtual) {
+        pedidoAtual = new Pedido(Cliente(nomeCliente.toStdString()));
+    }
 
     if (!db) {
         QMessageBox::critical(this, "Erro", "Não foi possível abrir o banco");
@@ -99,6 +109,9 @@ void TelaCardapio::carregarCardapio() {
 
 void TelaCardapio::setNomeCliente(const QString &nome) {
     nomeCliente = nome;
+    ui->labelBemVindo->setText(QString("Bem-vindo(a), %1!").arg(nomeCliente));
+    ui->labelBemVindo->setAlignment(Qt::AlignCenter);
+    ui->labelBemVindo->setStyleSheet("font-weight: font-size: 16px;");
 }
 
 
@@ -141,4 +154,11 @@ void TelaCardapio::on_botaoAdicionar_clicked() {
     QMessageBox::information(this, "Pedido", QString("%1 adicionado ao pedido!").arg(nomeProduto));
 
     tabelaSelecionada->clearSelection();
+}
+
+void TelaCardapio::on_botaoFinalizar_clicked()
+{
+    this->close();  // fecha a tela do cardápio
+    TelaFinal *telaFinal = new TelaFinal(nullptr, db, pedidoAtual); // cria a tela final passando o banco e o ponteiro do pedido atual
+    telaFinal->show(); // abre a TelaFinal
 }

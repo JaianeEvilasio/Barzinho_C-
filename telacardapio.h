@@ -15,7 +15,7 @@ class TelaCardapio : public QWidget
     Q_OBJECT
 
 public:
-    explicit TelaCardapio(QWidget *parent = nullptr, sqlite3* banco = nullptr);
+    explicit TelaCardapio(QWidget *parent = nullptr, sqlite3* banco = nullptr, Pedido* pedidoExistente = nullptr, const QString& nomeClienteSalvo = "");
     ~TelaCardapio();
 
     void setNomeCliente(const QString &nome);
@@ -28,7 +28,7 @@ private:
     sqlite3* db;
     QString nomeCliente;
 
-    Pedido* pedidoAtual = nullptr;
+    Pedido* pedidoAtual;
 
     void carregarCardapio();
 };

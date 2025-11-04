@@ -43,8 +43,7 @@ void MainWindow::on_pushButtonTeste_clicked() {
     }
 
     // abrir tela do cardápio
-    TelaCardapio *cardapio = new TelaCardapio(nullptr, db);
-    cardapio->setNomeCliente(nomeCliente);
+    TelaCardapio *cardapio = new TelaCardapio(nullptr, db, nullptr, nomeCliente);
     cardapio->show();
 
     this->hide();
