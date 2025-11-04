@@ -14,6 +14,19 @@ O projeto consiste em um sistema em modo console para um "Barzinho", que apresen
 * Luciano Paixão
 * Marcos Silva
 
+## Apresentação do Sistema
+### Tela Inicial - CADASTRO DO CLIENTE
+![primeira tela](https://github.com/user-attachments/assets/ed345eba-d3ce-4a76-96aa-823d4faf0401)
+
+### Segunda tela - CARDÁPIO
+![segunda tela](https://github.com/user-attachments/assets/189f5e81-c055-4c19-a558-4467860954dc)
+
+### Terceira tela - PEDIDO ADICIONADO
+![pedido adicionado](https://github.com/user-attachments/assets/7602af17-fe2e-4700-9a8e-85bdefc4e2e0)
+
+### Tela Final - PEDIDO FINALIZADO
+![tela final](https://github.com/user-attachments/assets/572f9c2a-138c-4cdf-9fc9-0104eb39d419)
+
 ## Estrutura do Projeto 
 ```
 Barzinho_C-/
