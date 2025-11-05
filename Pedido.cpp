@@ -10,7 +10,7 @@ Pedido::~Pedido() {} //destrutor de pedido (vazio)
 
 
 
-void Pedido::adicionaProduto(Produto* p) { //
+void Pedido::adicionaProduto(Produto* p) { 
     if (qtd < 50) { //limite de 50
         produtos[qtd++] = p;
     } else {
@@ -40,7 +40,7 @@ void Pedido::mostrarpedido() const {
 
             //botando true nos outros itens iguais do array
             for(int h= i +1; h<qtd ; h++){
-                if(gerenciamentop[h]==false and produtos[h]->getnome()==produtos[i]->getnome()){//ou seja, so entra na condicao se ainda nao tiver virado true e o nome for igual
+                if(gerenciamentop[h]==false && produtos[h]->getnome()==produtos[i]->getnome()){//ou seja, so entra na condicao se ainda nao tiver virado true e o nome for igual
                     contador=contador+1; //incrementando contadpr
                     gerenciamentop[h]=true; //vira true!
             }
