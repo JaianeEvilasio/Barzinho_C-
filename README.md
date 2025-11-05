@@ -89,6 +89,6 @@ g++ barzinho.cpp -o barzinho
 
 ## Links relevantes
 ### Confira o video explicando nosso código: 
-https://youtu.be/ZXS_11QNFPc
+https://youtu.be/5Kg2RZTEyJk
 ### Para mais detalhes, confira também o relatório sobre o projeto:
 https://1drv.ms/w/c/b6db38c16927f196/EaD8-IhdJGtNgK40-h-LNAgBaoIiGXXYDaNCMbn7NK4ofw?e=7ofHOe
