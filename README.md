@@ -69,6 +69,17 @@ Este projeto implementa um sistema simples de pedidos para um bar (Barzinho), es
 * **`main.cpp`**
     * Popula o `Barzinho` com produtos (alocados com `new`), lê interações do usuário, cria pedidos (`new Pedido(...)`), adiciona produtos (referenciando ponteiros do cardápio) e registra pedidos no `Barzinho`.
 
+### Uso do Banco de Dados SQLite
+
+Para garantir a persistência dos dados, o SQLite foi utilizado para armazenar os pedidos realizados pelos clientes. O banco de dados `barzinho.db` contém duas tabelas principais:
+
+1.  **Tabela `cardapio`:** Armazena os itens do cardápio, incluindo nome, preço e categoria (aperitivos ou bebidas).
+2.  **Tabela `pedidos`:** Registra os pedidos feitos pelos clientes, com informações como nome do cliente, item pedido, quantidade e valor total.
+
+O banco de dados foi integrado ao sistema de forma simples, com as tabelas sendo criadas automaticamente ao inicializar o sistema. Quando um pedido é finalizado, ele é armazenado na tabela `pedidos` do banco, permitindo que os dados sejam preservados para consultas futuras.
+
+A escolha do SQLite se deu pela sua leveza e facilidade de integração, sendo ideal para a necessidade de persistência local do projeto.
+
 ## Conceitos Utilizados na Disciplina
 * Linguagem C++
 * **Programação Orientada a Objetos (POO)**
