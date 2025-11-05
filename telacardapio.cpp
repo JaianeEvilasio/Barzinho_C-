@@ -152,10 +152,24 @@ void TelaCardapio::on_botaoAdicionar_clicked() {
 
     pedidoAtual->adicionaProduto(prod); //adiociona ao pedido
 
+    QString sql = QString("INSERT INTO pedidos (cliente, item, quantidade, total) VALUES ('%1', '%2', %3, %4);")
+                      .arg(nomeCliente)
+                      .arg(nomeProduto)
+                      .arg(1)
+                      .arg(preco);
+
+    char* errMsg = nullptr;
+
+    if (sqlite3_exec(db, sql.toUtf8().constData(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        qDebug() << "Erro ao salvar pedido:" << errMsg;
+        sqlite3_free(errMsg);
+    }
+
     QMessageBox::information(this, "Pedido", QString("%1 adicionado ao pedido!").arg(nomeProduto));
 
     tabelaSelecionada->clearSelection();
 }
+
 // botão finalizar
 void TelaCardapio::on_botaoFinalizar_clicked()
 {

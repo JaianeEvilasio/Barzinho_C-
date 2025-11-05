@@ -31,6 +31,7 @@ private:
     Pedido* pedidoAtual; //ponteiro para pedido atual
 
     void carregarCardapio();//carrega os produtos do banco de dados e preenche as tabelas bebidas e aperitivos
+    void salvarPedidonoBanco(Pedido* pedido);
 };
 
 #endif // TELACARDAPIO_H
