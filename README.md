@@ -14,25 +14,9 @@ O projeto consiste em um sistema em modo console para um "Barzinho", que apresen
 * Luciano Paixão
 * Marcos Silva
 
-## Apresentação do Sistema
-### Tela Inicial - CADASTRO DO CLIENTE
-![primeira tela](https://github.com/user-attachments/assets/ed345eba-d3ce-4a76-96aa-823d4faf0401)
-
-### Segunda tela - CARDÁPIO
-![segunda tela](https://github.com/user-attachments/assets/189f5e81-c055-4c19-a558-4467860954dc)
-
-### Terceira tela - PEDIDO ADICIONADO
-![pedido adicionado](https://github.com/user-attachments/assets/7602af17-fe2e-4700-9a8e-85bdefc4e2e0)
-
-### Tela Final - PEDIDO FINALIZADO
-![tela final](https://github.com/user-attachments/assets/572f9c2a-138c-4cdf-9fc9-0104eb39d419)
-
 ## Estrutura do Projeto 
 ```
 Barzinho_C-/
-    ├── .qtcreator/
-    │   └── CMakeLists.txt.user
-    ├── .gitignore
     ├── Aperitivo.h
     ├── Barzinho.cpp
     ├── barzinho.db
@@ -41,12 +25,7 @@ Barzinho_C-/
     ├── Bebidas.h
     ├── Cliente.cpp
     ├── Cliente.h
-    ├── CMakeLists.txt
-    ├── CMakeLists.txt.user
     ├── main.cpp
-    ├── mainwindow.cpp
-    ├── mainwindow.h
-    ├── mainwindow.ui
     ├── Pedido.cpp
     ├── Pedido.h
     ├── Produto.h
@@ -54,14 +33,13 @@ Barzinho_C-/
     ├── README.md
     ├── sqlite3.c
     ├── sqlite3.h
-    ├── sqlite3.o
-    ├── telacardapio.cpp
-    ├── telacardapio.h
-    ├── telacardapio.ui
-    ├── telafinal.cpp
-    ├── telafinal.h
-    └── telafinal.ui
+    └── sqlite3.o
 ```
+
+## Resultados
+![Cardápio](https://github.com/user-attachments/assets/e49a6009-463b-402a-b802-094088b5863b)
+
+![Pedido Adicionado](https://github.com/user-attachments/assets/b8073266-058d-4485-8403-c8733c3d1cf0)
 
 ## Arquitetura do Projeto
 Este projeto implementa um sistema simples de pedidos para um bar (Barzinho), escrito em C++ e orientado a objetos. O núcleo é a classe `Barzinho`, que mantém o cardápio (produtos) e armazena pedidos finalizados. Produtos são modelados por uma hierarquia (`Produto` → `Bebidas` / `Aperitivo`). A aplicação é de console (CLI) e usa herança e polimorfismo para exibir itens.
@@ -98,33 +76,19 @@ Este projeto implementa um sistema simples de pedidos para um bar (Barzinho), es
 * Estrutura **CRUD (Create, Read, Update, Delete)**
 
 ## Instruções de Execução
-
 Para compilar e executar este projeto, você precisará de:
 
-* **Qt6** (ou Qt5) e **CMake**
-* **Kit de Compilação:** MinGW (ou MSVC)
-* **Qt Creator** (Opcional, mas recomendado para facilitar)
+* **Kit de Compilação:** MinGW (ou MSVC) e SQlite
 
-## Compilação (via CMake)
-
-Se você não estiver usando o Qt Creator, pode compilar o projeto manualmente pela linha de comando.
-
-1.  Abra um terminal na pasta raiz do projeto.
-2.  Execute os seguintes comandos em ordem:
-
-    ```bash
-    # 1. Cria um diretório 'build' e entra nele
-    mkdir build && cd build
-    
-    # 2. Prepara os arquivos de build (makefiles, etc.)
-    cmake ..
-    
-    # 3. Compila o projeto
-    cmake --build .
-    ```
-
-3.  Após a compilação, o executável estará localizado dentro da pasta `build`.
+### Compilar: 
+g++ barzinho.cpp -o barzinho
+### Executar: 
+./barzinho.exe
 
 ---
 
-## 
+## Links relevantes
+### Confira o video explicando nosso código: 
+https://youtu.be/cgjG72cGzqM
+### Para mais detalhes, confira também o relatório sobre o projeto:
+https://1drv.ms/w/c/b6db38c16927f196/EaD8-IhdJGtNgK40-h-LNAgBaoIiGXXYDaNCMbn7NK4ofw?e=7ofHOe
